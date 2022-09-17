@@ -50,10 +50,10 @@ class MainWindowViews
         void displayObjects();
 
         /** \brief Gets the size of the game window
-         * \return rectSize size of the window
+         * \return pair<int,int> defining the width and height of the window
          */
 
-        RectSize getWindowSize() const;
+        pair<int,int> getWindowSize() const;
         /** \brief
         *  Destroys the main game window
         */
@@ -62,7 +62,7 @@ class MainWindowViews
     private:
         shared_ptr<sf::RenderWindow> mainWindow;
         sf::VideoMode videoMode;
-        RectSize windowSize;
+        pair<int,int> windowSize;
 };
 
 #endif // MAINWINDOWVIEWS_H

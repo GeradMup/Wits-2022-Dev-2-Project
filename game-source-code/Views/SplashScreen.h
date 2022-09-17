@@ -1,12 +1,13 @@
 #ifndef SPLASHSCREEN_H
 #define SPLASHSCREEN_H
 #include <SFML/GRAPHICS.hpp>
+#include <memory>
 
 using namespace std;
 
-
-const string GAME_PURPOSE = "Build an Igloo by jumping on ice blocks and hide in it before the temperature drops below 0";
-const string PLAYING_INSTRUCTIONS = "Use arrows 'UP', 'DOWN', 'LEFT' and 'RIGHT' for moving the player.";
+const int FONT_SIZE = 26;
+const float MIN_X_POS = 50.f;
+const float MIN_Y_POS = 30.f;
 
 /** \brief
  * SplashScreen class is responsible for the content of the splashscreen
@@ -15,12 +16,20 @@ const string PLAYING_INSTRUCTIONS = "Use arrows 'UP', 'DOWN', 'LEFT' and 'RIGHT'
 class SplashScreen
 {
     public:
+        /**< Default constructor */
+        SplashScreen(){}
+
         /** \brief Constructs the SplashScreen
-         * \param int width of the game window
-         * \param int height of the game window
+         * \param pair<int,int> (x,y) windowSize defining the width and height of the window.
+         * \param sf::Font textFont to be use for all text messages
          * \return void
          */
-        SplashScreen(int _windowWidth, int _windowHeight);
+        SplashScreen(pair<int,int> windowSize, shared_ptr<sf::Font> _textFont);
+
+        /** \brief Displays the splashscreen on the game window
+         * \param shared_ptr<sf::RenderWindow> window where the objects will be drawn
+         */
+        void displaySplashScreen(shared_ptr<sf::RenderWindow> window);
 
         /**< Destroys the SplashScreen */
         ~SplashScreen();
@@ -28,13 +37,17 @@ class SplashScreen
     private:
         int windowWidth;
         int windowHeight;
+        shared_ptr<sf::Font> textFont;
+
         sf::Text gamePurpose;
         sf::Text playingInstructions;
+        sf::Text continueInstructions;
         sf::RectangleShape background;
 
         void setupGamePurpose();
         void setupGameInstructions();
         void setupBackground();
+        void setupContinueInstructions();
 };
 
 #endif // SPLASHSCREEN_H
