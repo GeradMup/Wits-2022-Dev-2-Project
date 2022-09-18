@@ -5,6 +5,8 @@
 #include <memory>
 #include <stdint.h>
 
+#include "../Controllers/Commons.h"
+
 using namespace std;
 
 const unsigned int WINDOW_WIDTH = 1000;
@@ -12,19 +14,6 @@ const unsigned int WINDOW_HEIGHT = 600;
 const unsigned int BITS_PER_PIXEL = 32;
 const string TITLE = "Frostbite Game";
 const uint32_t STYLE = sf::Style::Titlebar | sf::Style::Close;
-
-/** \brief Defines the size of rectangular object
- *  \param int width of the object
- *  \param int height of the object
- */
-struct RectSize
-{
-    int width;
-    int height;
-
-    RectSize(){}
-    RectSize(int w, int h) : width(w), height(h){}
-};
 
 /** \brief
  *  Class to manage everything on the main game window
@@ -53,7 +42,7 @@ class MainWindowViews
          * \return pair<int,int> defining the width and height of the window
          */
 
-        pair<int,int> getWindowSize() const;
+        fb::RectSize getWindowSize() const;
         /** \brief
         *  Destroys the main game window
         */
@@ -62,7 +51,7 @@ class MainWindowViews
     private:
         shared_ptr<sf::RenderWindow> mainWindow;
         sf::VideoMode videoMode;
-        pair<int,int> windowSize;
+        fb::RectSize windowSize;
 };
 
 #endif // MAINWINDOWVIEWS_H

@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-SplashScreen::SplashScreen(pair<int,int> windowSize, shared_ptr<sf::Font> _textFont)
+SplashScreen::SplashScreen(fb::RectSize windowSize, shared_ptr<sf::Font> _textFont)
 {
-    windowWidth = windowSize.first;
-    windowHeight = windowSize.second;
+    windowWidth = windowSize.width;
+    windowHeight = windowSize.height;
     textFont = _textFont;
 
     setupGamePurpose();
@@ -42,7 +42,8 @@ void SplashScreen::setupGameInstructions()
 
 void SplashScreen::setupContinueInstructions()
 {
-    string continueInstructionsString = "Press 'ENTER' to continue or 'ESC' to quit";
+    string continueInstructionsString = "Press 'ENTER' to continue or 'ESC' to quit.\n"
+                                        "Press 'ESC' to close the game during game play.";
     float yPos = 400.f;
 
     continueInstructions.setFont(*textFont);
@@ -59,7 +60,7 @@ void SplashScreen::setupBackground()
     background.setFillColor(sf::Color::Magenta);
 }
 
-void SplashScreen::displaySplashScreen(shared_ptr<sf::RenderWindow> window)
+void SplashScreen::display(shared_ptr<sf::RenderWindow> window)
 {
     window->clear();
     window->draw(background);

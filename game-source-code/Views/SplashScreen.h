@@ -3,6 +3,8 @@
 #include <SFML/GRAPHICS.hpp>
 #include <memory>
 
+#include "../Controllers/Commons.h"
+
 using namespace std;
 
 const int FONT_SIZE = 26;
@@ -24,12 +26,12 @@ class SplashScreen
          * \param sf::Font textFont to be use for all text messages
          * \return void
          */
-        SplashScreen(pair<int,int> windowSize, shared_ptr<sf::Font> _textFont);
+        SplashScreen(fb::RectSize windowSize, shared_ptr<sf::Font> _textFont);
 
         /** \brief Displays the splashscreen on the game window
          * \param shared_ptr<sf::RenderWindow> window where the objects will be drawn
          */
-        void displaySplashScreen(shared_ptr<sf::RenderWindow> window);
+        void display(shared_ptr<sf::RenderWindow> window);
 
         /**< Destroys the SplashScreen */
         ~SplashScreen();

@@ -1,16 +1,23 @@
 #include "MainController.h"
-#include <filesystem>
 
 #include <iostream>
 
 MainController::MainController()
 {
-    loadResources();
+    ///Start by loading all the resources needed for the game.
+    gameResources = Resources();
+    gameResources.loadResources();
 
     mainWindowViews = MainWindowViews();
     mainWindow = mainWindowViews.getMainWindow();
 
-    splashScreen = SplashScreen(mainWindowViews.getWindowSize(), sansationFont);
+    splashScreen = SplashScreen(mainWindowViews.getWindowSize(), gameResources.getSansationsFont());
+    playerLogic = make_shared<PlayerLogic>(mainWindowViews.getWindowSize());
+    playerViews = make_shared<PlayerViews>(gameResources.getPlayerSprites());
+    playerController = PlayerController(playerLogic, playerViews);
+
+    ///Set the state of the game to starting
+    gameState = State::Starting;
 }
 
 void MainController::runGameLoop()
@@ -22,24 +29,64 @@ void MainController::runGameLoop()
         sf::Event event;
         while (mainWindow->pollEvent(event))
         {
-            ///If the user is trying to close the window, we close it.
-            if (event.type == sf::Event::Closed)
+            switch(event.type)
+            {
+            case sf::Event::Closed:
                 mainWindow->close();
+                break;
+            case sf::Event::KeyPressed:
+                processKeyPress(event.key.code);
+                break;
+            default:
+                break;
+            }
         }
-
-        splashScreen.displaySplashScreen(mainWindow);
+        printObjects();
     }
 }
 
-void MainController::loadResources()
+void MainController::printObjects()
 {
-
-    sansationFont = make_shared<sf::Font>();
-    string sansationFontPath = "resources/Courgette-Regular.ttf";
-    bool loadingFontSucceeded = sansationFont->loadFromFile(sansationFontPath);
-    if(loadingFontSucceeded == false)
+    switch(gameState)
     {
-        cout << "Failed to load font";
+    case State::Starting:
+        splashScreen.display(mainWindow);
+        break;
+    case State::Playing:
+        playerViews->display(mainWindow);
+        break;
+    default:
+        break;
+    }
+}
+
+void MainController::processKeyPress(sf::Keyboard::Key keyCode)
+{
+    switch(keyCode)
+    {
+        case sf::Keyboard::Enter:
+            gameState = State::Playing;
+            break;
+
+        case sf::Keyboard::Up:
+            playerController.keyPressed(fb::Direction::Up);
+            break;
+        case sf::Keyboard::Down:
+            playerController.keyPressed(fb::Direction::Down);
+            break;
+        case sf::Keyboard::Right:
+            playerController.keyPressed(fb::Direction::Right);
+            break;
+        case sf::Keyboard::Left:
+            playerController.keyPressed(fb::Direction::Left);
+            break;
+
+        case sf::Keyboard::Escape:
+            mainWindow->close();
+            break;
+
+        default:
+            break;
     }
 }
 
