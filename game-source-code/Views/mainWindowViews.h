@@ -5,6 +5,8 @@
 #include <memory>
 #include <stdint.h>
 
+#include "../Controllers/Commons.h"
+
 using namespace std;
 
 const unsigned int WINDOW_WIDTH = 1000;
@@ -38,6 +40,8 @@ class MainWindowViews
         void displayObjects();
 
 
+        fb::RectSize getWindowSize() const;
+
 
         /** \brief
         *  Destroys the main game window
@@ -47,7 +51,7 @@ class MainWindowViews
     private:
         shared_ptr<sf::RenderWindow> mainWindow;
         sf::VideoMode videoMode;
-
+        fb::RectSize windowSize;
 
 };
 
