@@ -5,7 +5,10 @@ MainController::MainController()
     mainWindowViews = MainWindowViews();
     mainWindow = mainWindowViews.getMainWindow();
 
-    splashScreen = SplashScreen(mainWindowViews.getWindowSize());
+    resources = Resources();
+    resources.loadResources();
+
+    splashScreen = SplashScreen(mainWindowViews.getWindowSize(), resources.getCourgetteRegularFont());
 }
 
 void MainController::runGameLoop()

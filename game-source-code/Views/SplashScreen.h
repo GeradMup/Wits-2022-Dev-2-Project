@@ -13,7 +13,7 @@ class SplashScreen
     public:
         SplashScreen(){}
 
-        SplashScreen(fb::RectSize windowSize);
+        SplashScreen(fb::RectSize windowSize, shared_ptr<sf::Font> _textFont);
         /** Default destructor */
         ~SplashScreen();
 

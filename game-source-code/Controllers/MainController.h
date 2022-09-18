@@ -3,6 +3,7 @@
 
 #include "../Views/mainWindowViews.h"
 #include "../Views/SplashScreen.h"
+#include "../Models/Resources.h"
 
 class MainController
 {
@@ -20,6 +21,7 @@ class MainController
 
         MainWindowViews mainWindowViews;
         SplashScreen splashScreen;
+        Resources resources;
 };
 
 #endif // MAINCONTROLLER_H
